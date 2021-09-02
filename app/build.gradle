@@ -59,10 +59,11 @@ dependencies {
 //    implementation 'com.vpartnerlib.stg:vodafone:1.0.1'
 
     // car connect
-     implementation 'com.vpartnerlib.stg:carconnect:1.0.2'
+//     implementation 'com.vpartnerlib.stg:carconnect:1.0.2'
 
     // trackimo
-    // implementation 'com.vpartnerlib.stg:trackimo:1.0.2'
+//    implementation 'com.vpartnerlib.stg:trackimo:1.0.3'
 
-
+    //HMS dependencies
+    implementation 'com.huawei.hms:iap:4.0.4.301'
 }
