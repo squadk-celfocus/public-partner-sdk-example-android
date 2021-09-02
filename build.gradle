@@ -45,6 +45,9 @@ allprojects {
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
+        maven {
+            url 'https://developer.huawei.com/repo/'
+        }
     }
 
     apply plugin: 'org.jmailen.kotlinter'
