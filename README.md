@@ -100,7 +100,7 @@ Add the following code to build.gradle.kts inside the application module that wi
              *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibrary-GPR-KDSL"
              */
             
-            url = uri("https://github.com/crvshlab/partner-sdk-android")
+             url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
 	    
             credentials {
                 /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key =PERSONAL_ACCESS_TOKEN**/
