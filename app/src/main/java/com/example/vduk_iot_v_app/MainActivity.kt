@@ -15,16 +15,15 @@ class MainActivity : AppCompatActivity() {
         grantId = GRANT_ID, // defined by partner
         partnerCode = PARTNER_CODE,
         partnerLogo = PARTNER_LOGO,
-        sponsorLogo = SPONSOR_LOGO
+        sponsorLogo = ""
     )
 
     companion object {
-        const val CLIENT_ID = "" // To be filled by partner
-        const val GRANT_ID = "" // To be filled by partner
+        const val GRANT_ID = ""
+        const val CLIENT_ID = ""
         const val PARTNER_CODE = "DUMMY_PARTNER"
-        const val PARTNER_LOGO = "ic_partner.png"
-        const val SPONSOR_LOGO = "ic_partner.png"
         const val PRODUCT_CODE = "DUMMY_PARTNER_TRACKER1"
+        const val PARTNER_LOGO = "ic_partner.png"
         const val PRODUCT_ID = ""
     }
 
