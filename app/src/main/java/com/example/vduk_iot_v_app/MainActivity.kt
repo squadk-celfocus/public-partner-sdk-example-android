@@ -3,8 +3,6 @@ package com.example.vduk_iot_v_app
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.vduk_iot_v_app.Const.CLIENT_ID
-import com.example.vduk_iot_v_app.Const.GRANT_ID
 import com.example.vduk_iot_v_app.databinding.ActivityMainBinding
 import com.vodafone.smartlife.vpartner.domain.usecases.VPartnerLib
 
@@ -16,10 +14,13 @@ class MainActivity : AppCompatActivity() {
         clientId = CLIENT_ID, // defined by partner
         grantId = GRANT_ID, // defined by partner
         partnerCode = PARTNER_CODE,
-        partnerLogo = PARTNER_LOGO
+        partnerLogo = PARTNER_LOGO,
+        sponsorLogo = ""
     )
 
     companion object {
+        const val GRANT_ID = ""
+        const val CLIENT_ID = ""
         const val PARTNER_CODE = "DUMMY_PARTNER"
         const val PRODUCT_CODE = "DUMMY_PARTNER_TRACKER1"
         const val PARTNER_LOGO = "ic_partner.png"

@@ -116,7 +116,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
    
         //consume library
    
-        implementation("com.vpartner.package.vpartnerlib:$version")
+        implementation("com.vpartner:sdk:$version") // currently on 1.0.5
 	...}
 
 ## Other Configs
@@ -155,7 +155,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 
         //SecLib
         classpath "com.vodafone.smapi.analytics:android-plugin:1.1.4"
-        classpath 'com.google.gms:google-services:4.3.8'
+        classpath 'com.google.gms:google-services:4.3.10'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -168,23 +168,26 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 	)
 
 	allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-        jcenter() // Warning: this repository is going to shut down soon
+        repositories {
+            google()
+            mavenCentral()
+            mavenLocal()
+            jcenter() // Warning: this repository is going to shut down soon
 
-        maven { url 'https://mobile-sdk.jumio.com' }
-        maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' }
-        maven {
-            name = "GithubPackages"
-            url = uri("https://maven.pkg.github.com/crvshlab/partner-sdk-android")
-            credentials {
-                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            maven { url 'https://mobile-sdk.jumio.com' }
+            maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' }
+            maven {
+                name = "GithubPackages"
+                url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
+                credentials {
+                    username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                    password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+                }
+            }
+            maven {
+                url 'https://developer.huawei.com/repo/'
             }
         }
-    }
 	}
 
 	task clean(type: Delete) {
@@ -199,7 +202,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 
 Add IdtmLib implementation to your gradle as dependencie:
 
-implementation files('libs/idtmlib-release-v2.0.13.aar')
+implementation files('libs/idtmlib-release-v2.0.15.aar')
 
 Follow this link https://developer.android.com/studio/projects/android-library#psd-add-aar-jar-dependency to add aar files to the main project.
 
