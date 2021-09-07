@@ -114,9 +114,15 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
 
       dependencies {
    
-        //consume library
+        // consume vpartner library
    
         implementation("com.vpartner:sdk:$version") // currently on 1.0.5
+
+        // consume other necessary dependencies
+
+        implementation 'com.huawei.hms:iap:4.0.4.301'
+        implementation 'com.google.firebase:firebase-messaging'
+        implementation platform ('com.google.firebase:firebase-bom:28.2.0')
 	...}
 
 ## Other Configs
@@ -155,7 +161,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 
         //SecLib
         classpath "com.vodafone.smapi.analytics:android-plugin:1.1.4"
-        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.gms:google-services:4.3.8'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
