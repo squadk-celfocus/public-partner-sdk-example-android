@@ -116,7 +116,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
    
         // consume vpartner library
    
-        implementation("com.vpartner:sdk:$version") // currently on 1.0.5
+        implementation("com.vpartnerlib:sdk:$version") // currently on 1.0.6
 
         // consume other necessary dependencies
 
@@ -217,6 +217,10 @@ Package whitelisting requirements:
 • For Idtm Library, first it is needed to whitelist the package of your project. Only after the whitelisting is successful you’ll be able to make use of the SDK. To check the package of your project to to Manifest and you’ll find it there. 
 
 • Also for Idtm Library to work, google-services.json is needed on your project root. To generate this file, go to https://console.firebase.google.com/ , create a new project and select android to generate this file with the correct package of your android root app.
+
+### network_security_config.xml
+
+On app/src/main/res/xml you'll find the network_security_config xml. This file is needed to trust our staging domain. Include it on your project, same path.
 
 
 ## Contact
