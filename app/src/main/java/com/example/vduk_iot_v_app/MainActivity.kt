@@ -4,11 +4,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vduk_iot_v_app.databinding.ActivityMainBinding
+import com.vodafone.smartlife.vpartner.MyApplication
+import com.vodafone.smartlife.vpartner.data.repository.LocalPreferencesRepositoryImpl
 import com.vodafone.smartlife.vpartner.domain.usecases.VPartnerLib
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val sharedPreferences =
+        LocalPreferencesRepositoryImpl.getInstance(MyApplication.application())
 
     private val vPartnerLibIntegration = VPartnerLib(
         clientId = CLIENT_ID, // defined by partner
@@ -67,7 +73,8 @@ class MainActivity : AppCompatActivity() {
             ) PRODUCT_ID else binding.editTextImei.text.toString(),
             productCode = if (binding.editTextProdcutCode.text.toString()
                 .isEmpty()
-            ) PRODUCT_CODE else binding.editTextProdcutCode.text.toString()
+            ) PRODUCT_CODE else binding.editTextProdcutCode.text.toString(),
+            ::partnerStatusCallback
         )
 
         vPartnerLibIntegration.storePartnerCode(
@@ -89,5 +96,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         moveTaskToBack(true)
+    }
+
+    private fun partnerStatusCallback(status: String) {
+        println("Onboarding status: " + JSONObject(status).getString("status"))
+
+        sharedPreferences.storeOnboardingStatus("{\"status\":\"\"}")
     }
 }

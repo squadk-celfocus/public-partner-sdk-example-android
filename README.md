@@ -38,7 +38,13 @@ To call this method use `VPartnerLib.addDevice(context, productId, productCode, 
 
 If productId is filled goes straight to identifying your product screen after login. If it is empty, starts the AddDevice flow.
 
-`callback` is passed to AddDevice so you can have the onboarding status every time it gets updated. Remember: it must be a function that receives a string as parameter, and you do anything you want with it.
+`callback` is passed to AddDevice so you can have the onboarding status every time it gets updated. Remember: it must be a function that receives a string as parameter, and you do anything you want with it. The string is a stringified json object, containing:
+
+{
+    status: "fail" | "pending" | "success"
+}
+
+Also, this status is stored on the app's shared preferences, so you have to reset it every time the callback is run. An example of how to use it is on MainActivity.kt of this project.
 
 ### Manage Subscriptions After initialize the VPartnerLib
 
