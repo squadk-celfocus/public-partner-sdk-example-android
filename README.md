@@ -122,7 +122,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
    
         // consume vpartner library
    
-        implementation("com.vpartnerlib:sdk:$version") // currently on 1.0.6
+        implementation("com.vpartnerlib:sdk:$version") // *
 
         // consume other necessary dependencies
 
@@ -130,6 +130,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
         implementation 'com.google.firebase:firebase-messaging'
         implementation platform ('com.google.firebase:firebase-bom:28.2.0')
 	...}
+*check [our packages](https://github.com/orgs/crvshlab/packages?repo_name=public-partner-sdk-example-android) for the latest version
 
 ## Other Configs
 
