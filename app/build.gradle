@@ -49,7 +49,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation files('libs/idtmlib-release_v2.0.15.aar')
-    implementation 'com.vpartnerlib.stg:sdk:1.0.7'
+    implementation 'com.vpartnerlib.stg:sdk:1.0.8'
     implementation 'com.huawei.hms:iap:4.0.4.301'
     implementation platform ('com.google.firebase:firebase-bom:28.2.0')
     implementation 'com.google.firebase:firebase-messaging'
