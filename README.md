@@ -217,7 +217,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 
 Add IdtmLib implementation to your gradle as dependencie:
 
-implementation files('libs/idtmlib-release-v2.0.17.aar')
+implementation files('libs/idtmlib-release-v2.0.18.aar')
 
 Follow this link https://developer.android.com/studio/projects/android-library#psd-add-aar-jar-dependency to add aar files to the main project.
 
