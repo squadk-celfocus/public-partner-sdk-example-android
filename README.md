@@ -27,12 +27,16 @@ VPartnerLib The initialization accepts the following parameters:
 
 • Locale (optional)
 
+• useDeeplink (optional)
+
 Integration:
 
-- VPartnerLib( clientId = CLIENT_ID, grantId = GRANT_ID, partnerCode = PARTNER_CODE, partnerLogo = PARTNER_LOGO, sponsorLogo = SPONSOR_LOGO, locale = LOCALE)
+- VPartnerLib( clientId = CLIENT_ID, grantId = GRANT_ID, partnerCode = PARTNER_CODE, partnerLogo = PARTNER_LOGO, sponsorLogo = SPONSOR_LOGO, locale = LOCALE, useDeeplink = USE_DEEPLINK)
 
 Initializing does not trigger the SDK, it only sets these values internally. At the exception of partnerLogo and sponsorLogo, all of these parameters are mandatory.
 If partnerLogo or sponsorLogo are empty, the splash screen won’t have the partners or the sponsor logos. To fill in either of them, define the desired parameter with the name of your image file without the extensions (png, jpeg, etc), which you need to put into “assets” folder in the project. If Locale is empty, the selected language will be the SIM card language, if you want another language, just pass it as string(ex: "it","es","de","za","gr,"pt","ie").
+
+The useDeeplink optional parameter defines if the app should use the predefined deeplink or just close the SDK. It should receive a Boolean value (true or false), which will be used to define if should navigate to deeplink (true) or not (false).
 
 ### Add Device After initialize the VPartnerLib
 
