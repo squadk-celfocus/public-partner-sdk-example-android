@@ -148,9 +148,16 @@ buildFeatures { dataBinding = true // for view binding: viewBinding = true }
 
 • Bear in mind that minSdkVersion needs to be updated to at least version 23.
 
-• This SDK needs Google-services so please make sure to download and install Google-Services on the SDK Manager. Afterwards, add the google-services plugin to your gradle.
+• This SDK needs Google-services so please make sure to download and install Google-Services on the SDK Manager. Afterwards, add the google-services plugin to your gradle. You will also need to include kotlin-parcelize.
 
+• In general, make sure you have these plugins already on your gradle. If not, it’s mandatory to add them.
+```
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-parcelize'
+```
 
 ### Jumio
 
