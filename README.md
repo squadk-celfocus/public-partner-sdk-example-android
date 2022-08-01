@@ -67,7 +67,61 @@ To call this method use VPartnerLib.manageSubscriptions(context).
     	}
 	}
 
-### Step 1: Update build.gradle.kts inside the application module
+## Using a library from the GitHub Packages
+
+Currently the GitHub Packages requires us to Authenticate to download an Android Library (Public or Private) hosted on the GitHub Packages. This might change for future releases
+
+Steps 1 and 2 can be skipped if already followed while publishing a library
+
+### Step 1 : Generate a Personal Access Token for GitHub
+
+Inside you GitHub account:
+Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
+Make sure you select the following scopes ("read:packages") and Generate a token
+After Generating make sure to copy your new personal access token. You won’t be able to see it again!
+
+### Step 2: Store your GitHub - Personal Access Token details
+
+Create a github.properties file within your root Android project
+
+In case of a public repository make sure you add this file to .gitignore for keep the token private
+
+Add properties gpr.usr=GITHUB_USERID and gpr.key=PERSONAL_ACCESS_TOKEN
+Replace GITHUB_USERID with personal / organisation Github User ID and PERSONAL_ACCESS_TOKEN with the token generated in #Step 1
+
+Alternatively you can also add the GPR_USER and GPR_API_KEY values to your environment variables on you local machine or build server to avoid creating a github properties file
+
+### Step 3 : Update build.gradle.kts inside the application module
+
+Add the following code to build.gradle.kts inside the application module that will be using the library published on GitHub Packages Repository
+
+    def githubProperties = new Properties()
+    githubProperties.load(
+        new FileInputStream(rootProject.file("github.properties"))
+    )
+
+//GitHub Authentication
+
+     repositories {
+         maven {
+             name = "GitHubPackages"
+             /*  Configure path to the library hosted on GitHub Packages Registry
+              *  Replace UserID with package owner userID and REPOSITORY with the repository name
+              *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibrary-GPR-KDSL"
+              */
+
+              url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
+
+             credentials {
+                 /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key =PERSONAL_ACCESS_TOKEN**/
+                 username = githubProperties["gpr.usr"] as String? ?: System.getenv("GPR_USER")
+                 password = githubProperties["gpr.key"] as String? ?: System.getenv("GPR_API_KEY")
+             }
+         }
+     }
+
+
+## Update build.gradle.kts inside the application module
 
 inside dependencies of the build.gradle.kts of app module, use the following code
 
@@ -92,11 +146,11 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
             implementation files('libs/idtmlib-release_v2.0.25.aar')
 	...}
 
-## Step 2: Hilt
+## Hilt
 
 We are now using Dagger-Hilt for DI, to get it up and running with your app, you have to annotate your app's entry point, like we are doing here: app/src/main/java/com/example/vduk_iot_v_app/MyApp.kt
 
-## Step 3: Other Configs
+## Other Configs
 
 In gradle make sure that build features include databinding and viewbinding with value true inside android group
 
@@ -118,7 +172,7 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: 'dagger.hilt.android.plugin'
 ```
 
-### Step 4: Jumio, Huawei, Hilt and JitPack dependencies
+## Jumio, Huawei, Hilt and JitPack dependencies
 
 Add Jumio SDK url to your maven under repositories in allprojects maven { url 'https://mobile-sdk.jumio.com' }
 
@@ -181,11 +235,11 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
     delete rootProject.buildDir
 	}
 
-### Step 5: Gradle.properties 
+## Gradle.properties 
 
 • Set jetifier to true android.enableJetifier = true
 
-## Step 6: IDTM Library integration
+## IDTM Library integration
 
 Add IdtmLib implementation to your gradle as a dependency:
 
@@ -199,7 +253,7 @@ Package whitelisting requirements:
 
 • Also for Idtm Library to work, google-services.json is needed on your project root. To generate this file, go to https://console.firebase.google.com/ , create a new project and select android to generate this file with the correct package of your android root app.
 
-### network_security_config.xml
+## network_security_config.xml
 
 On app/src/main/res/xml you'll find the network_security_config xml. This file is needed to trust our staging domain. Include it on your project, same path.
 
