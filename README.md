@@ -110,7 +110,7 @@ Add the following code to build.gradle.kts inside the application module that wi
               *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibrary-GPR-KDSL"
               */
 
-              url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
+              url = uri("https://maven.pkg.github.com/squadk-celfocus/public-partner-sdk-example-android")
 
              credentials {
                  /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key =PERSONAL_ACCESS_TOKEN**/
@@ -224,7 +224,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
             maven { url 'https://developer.huawei.com/repo/' }
             maven {
                 name = "GithubPackages"
-                url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
+                url = uri("https://maven.pkg.github.com/squadk-celfocus/public-partner-sdk-example-android")
                 credentials {
                     username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                     password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")

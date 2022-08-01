@@ -62,5 +62,5 @@ dependencies {
     implementation 'com.google.guava:guava:30.1-jre'
 
     implementation files('libs/idtmlib-release_v2.0.25.aar')
-    implementation 'com.vpartnerlib.sdk:stg:2.0.1'
+    implementation 'com.vpartnerlib.sdk:prod:2.0.0'
 }
