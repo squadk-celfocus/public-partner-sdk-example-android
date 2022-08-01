@@ -146,7 +146,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
             implementation files('libs/idtmlib-release_v2.0.25.aar')
 	...}
 
-*check [our packages](https://github.com/orgs/crvshlab/packages?repo_name=public-partner-sdk-example-android) for the latest version
+*check [our packages](https://github.com/orgs/squadk-celfocus/packages?repo_name=public-partner-sdk-example-android) for the latest version
 
 ## Hilt
 
