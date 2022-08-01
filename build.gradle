@@ -1,6 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.5.21"
+    ext.hilt_version = "2.42"
+
     repositories {
         google()
         mavenCentral()
@@ -11,12 +13,13 @@ buildscript {
 
     dependencies {
         classpath "org.jmailen.gradle:kotlinter-gradle:3.2.0"
-        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath "com.android.tools.build:gradle:7.2.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 
         //SecLib
-        classpath "com.vodafone.smapi.analytics:android-plugin:1.1.4"
-        classpath 'com.google.gms:google-services:4.3.8'
+        classpath "com.vodafone.smapi.analytics:android-plugin:1.1.5"
+        classpath 'com.google.gms:google-services:4.3.10'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -33,10 +36,12 @@ allprojects {
         google()
         mavenCentral()
         mavenLocal()
-        jcenter() // Warning: this repository is going to shut down soon
+        jcenter()
 
         maven { url 'https://mobile-sdk.jumio.com' }
         maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://developer.huawei.com/repo/' }
         maven {
             name = "GithubPackages"
             url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
@@ -44,9 +49,6 @@ allprojects {
                 username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
-        }
-        maven {
-            url 'https://developer.huawei.com/repo/'
         }
     }
 
