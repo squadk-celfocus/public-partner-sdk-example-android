@@ -127,7 +127,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
 
       dependencies {
             // consume vpartner library
-            implementation files('libs/vpartnerlib_sdk_prod-v2.0.0.aar')
+            implementation("com.vpartnerlib:sdk:$version") // *
             
             // consume other necessary dependencies
             
@@ -145,6 +145,8 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
             
             implementation files('libs/idtmlib-release_v2.0.25.aar')
 	...}
+
+*check [our packages](https://github.com/orgs/crvshlab/packages?repo_name=public-partner-sdk-example-android) for the latest version
 
 ## Hilt
 
