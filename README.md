@@ -9,17 +9,19 @@ The SDK is built under Vodafone's design system, but allows for the Partners to 
 
 # Library Usage
 
-In order to run the SDK a ClientID and GrantID are necessary. Each partner is entitled to one. Contact the SquaDK team in order to get these keys.
+In order to run the SDK a PartnerPassword. Each partner is entitled to one. Contact the SquaDK team in order to get yours.
 
 ### Initialization expose a class VPartnerLib that initializes the SDK
 
-VPartnerLib The initialization accepts the following parameters: 
+VPartnerLib The initialization accepts the following parameters:
 
-• ClientID (mandatory) 
+• PartnerPassword (mandatory)
 
-• GrantID (mandatory) 
+• PartnerCode (mandatory)
 
-• PartnerCode (mandatory) 
+• ClientID (optional) 
+
+• GrantID (optional)
 
 • PartnerLogo (optional)
 
@@ -31,12 +33,12 @@ VPartnerLib The initialization accepts the following parameters:
 
 Integration:
 
-- VPartnerLib( clientId = CLIENT_ID, grantId = GRANT_ID, partnerCode = PARTNER_CODE, partnerLogo = PARTNER_LOGO, sponsorLogo = SPONSOR_LOGO, locale = LOCALE, useDeeplink = USE_DEEPLINK)
+- VPartnerLib(partnerPassword = PARTNER_PASSWORD, clientId = CLIENT_ID, grantId = GRANT_ID, partnerCode = PARTNER_CODE, partnerLogo = PARTNER_LOGO, sponsorLogo = SPONSOR_LOGO, locale = LOCALE, useDeeplink = USE_DEEPLINK)
 
 Initializing does not trigger the SDK, it only sets these values internally. At the exception of partnerLogo and sponsorLogo, all of these parameters are mandatory.
 If partnerLogo or sponsorLogo are empty, the splash screen won’t have the partners or the sponsor logos. To fill in either of them, define the desired parameter with the name of your image file without the extensions (png, jpeg, etc), which you need to put into “assets” folder in the project. If Locale is empty, the selected language will be the SIM card language, if you want another language, just pass it as string(ex: "it","es","de","za","gr,"pt","ie").
 
-The useDeeplink optional parameter defines if the app should use the predefined deeplink or just close the SDK. It should receive a Boolean value (true or false), which will be used to define if should navigate to deeplink (true) or not (false).
+The useDeeplink optional parameter defines if the app should use the predefined deeplink or just close the SDK. It should receive a Boolean value (true or false), which will be used to define if should navigate to deeplink (true) or not (false). (DEPRECATED)
 
 ### Add Device After initialize the VPartnerLib
 
@@ -56,10 +58,6 @@ Also, this status is stored on the app's shared preferences, so you have to rese
 
 To call this method use VPartnerLib.manageSubscriptions(context).
 
-### Logout After initialize the VPartnerLib
-
-To call this method use VPartnerLib.logout(context).
-
 ### Extend MyApplication class from Library to main Application App to initialize Idtm and Library
 
 	class MyApp : MyApplication() {
@@ -69,76 +67,36 @@ To call this method use VPartnerLib.logout(context).
     	}
 	}
 
+### Step 1: Update build.gradle.kts inside the application module
 
-# Using a library from the GitHub Packages
-
-Currently the GitHub Packages requires us to Authenticate to download an Android Library (Public or Private) hosted on the GitHub Packages. This might change for future releases
-
-Steps 1 and 2 can be skipped if already followed while publishing a library
-
-### Step 1 : Generate a Personal Access Token for GitHub
-
-Inside you GitHub account:
-Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
-Make sure you select the following scopes ("read:packages") and Generate a token
-After Generating make sure to copy your new personal access token. You won’t be able to see it again!
-
-### Step 2: Store your GitHub - Personal Access Token details
-
-Create a github.properties file within your root Android project
-
-In case of a public repository make sure you add this file to .gitignore for keep the token private
-
-Add properties gpr.usr=GITHUB_USERID and gpr.key=PERSONAL_ACCESS_TOKEN
-Replace GITHUB_USERID with personal / organisation Github User ID and PERSONAL_ACCESS_TOKEN with the token generated in #Step 1
-
-Alternatively you can also add the GPR_USER and GPR_API_KEY values to your environment variables on you local machine or build server to avoid creating a github properties file
-
-### Step 3 : Update build.gradle.kts inside the application module
-
-Add the following code to build.gradle.kts inside the application module that will be using the library published on GitHub Packages Repository
-
-	val githubPropertiesFile = rootProject.file("github.properties");
-	val githubProperties = Properties()
-	githubProperties.load(FileInputStream(githubPropertiesFile))
-  
-  //GitHub Authentication
-    
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            /*  Configure path to the library hosted on GitHub Packages Registry
-             *  Replace UserID with package owner userID and REPOSITORY with the repository name
-             *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibrary-GPR-KDSL"
-             */
-            
-             url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
-	    
-            credentials {
-                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key =PERSONAL_ACCESS_TOKEN**/
-                username = githubProperties["gpr.usr"] as String? ?: System.getenv("GPR_USER")
-                password = githubProperties["gpr.key"] as String? ?: System.getenv("GPR_API_KEY")
-            }
-        }
-    }
-    
 inside dependencies of the build.gradle.kts of app module, use the following code
 
       dependencies {
-   
-        // consume vpartner library
-   
-        implementation("com.vpartnerlib:sdk:$version") // *
-
-        // consume other necessary dependencies
-
-        implementation 'com.huawei.hms:iap:4.0.4.301'
-        implementation 'com.google.firebase:firebase-messaging'
-        implementation platform ('com.google.firebase:firebase-bom:28.2.0')
+            // consume vpartner library
+            implementation files('libs/vpartnerlib_sdk_prod-v2.0.0.aar')
+            
+            // consume other necessary dependencies
+            
+            // Firebase
+            implementation platform ('com.google.firebase:firebase-bom:28.2.0')
+            implementation 'com.google.firebase:firebase-messaging'
+            
+            // Dagger-Hilt
+            implementation "com.google.dagger:hilt-android:$hilt_version"
+            kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+            
+            implementation 'com.google.guava:guava:30.1-jre'
+            
+            // IDTM
+            
+            implementation files('libs/idtmlib-release_v2.0.25.aar')
 	...}
-*check [our packages](https://github.com/orgs/crvshlab/packages?repo_name=public-partner-sdk-example-android) for the latest version
 
-## Other Configs
+## Step 2: Hilt
+
+We are now using Dagger-Hilt for DI, to get it up and running with your app, you have to annotate your app's entry point, like we are doing here: app/src/main/java/com/example/vduk_iot_v_app/MyApp.kt
+
+## Step 3: Other Configs
 
 In gradle make sure that build features include databinding and viewbinding with value true inside android group
 
@@ -157,9 +115,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-parcelize'
+apply plugin: 'dagger.hilt.android.plugin'
 ```
 
-### Jumio
+### Step 4: Jumio, Huawei, Hilt and JitPack dependencies
 
 Add Jumio SDK url to your maven under repositories in allprojects maven { url 'https://mobile-sdk.jumio.com' }
 
@@ -168,6 +127,8 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 	// Top-level build file where you can add configuration options common to all sub-projects/modules.
 	buildscript {
     ext.kotlin_version = "1.5.21"
+    ext.hilt_version = "2.42"
+
     repositories {
         google()
         mavenCentral()
@@ -176,12 +137,13 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath "com.android.tools.build:gradle:7.2.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 
         //SecLib
-        classpath "com.vodafone.smapi.analytics:android-plugin:1.1.4"
-        classpath 'com.google.gms:google-services:4.3.8'
+        classpath "com.vodafone.smapi.analytics:android-plugin:1.1.5"
+        classpath 'com.google.gms:google-services:4.3.10'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -202,6 +164,8 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 
             maven { url 'https://mobile-sdk.jumio.com' }
             maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' }
+            maven { url 'https://jitpack.io' }
+            maven { url 'https://developer.huawei.com/repo/' }
             maven {
                 name = "GithubPackages"
                 url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
@@ -210,9 +174,6 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
                     password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
                 }
             }
-            maven {
-                url 'https://developer.huawei.com/repo/'
-            }
         }
 	}
 
@@ -220,15 +181,15 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
     delete rootProject.buildDir
 	}
 
-### Gradle.properties 
+### Step 5: Gradle.properties 
 
 • Set jetifier to true android.enableJetifier = true
 
-## IDTM Library integration
+## Step 6: IDTM Library integration
 
-Add IdtmLib implementation to your gradle as dependencie:
+Add IdtmLib implementation to your gradle as a dependency:
 
-implementation files('libs/idtmlib-release-v2.0.24.aar')
+implementation files('libs/idtmlib-release-v2.0.26.aar')
 
 Follow this link https://developer.android.com/studio/projects/android-library#psd-add-aar-jar-dependency to add aar files to the main project.
 
