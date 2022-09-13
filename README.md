@@ -143,7 +143,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
             
             // IDTM
             
-            implementation files('libs/idtmlib-release_v2.0.26.aar')
+            implementation files('libs/idtmlib-release_v2.0.27.aar')
 	...}
 
 *check [our packages](https://github.com/orgs/squadk-celfocus/packages?repo_name=public-partner-sdk-example-android) for the latest version
@@ -245,7 +245,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 
 Add IdtmLib implementation to your gradle as a dependency:
 
-implementation files('libs/idtmlib-release_v2.0.26.aar')
+implementation files('libs/idtmlib-release_v2.0.27.aar')
 
 Follow this link https://developer.android.com/studio/projects/android-library#psd-add-aar-jar-dependency to add aar files to the main project.
 

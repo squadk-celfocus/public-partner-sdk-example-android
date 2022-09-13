@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     )
 
     companion object {
-        const val PARTNER_PASSWORD = ""
+        const val PARTNER_PASSWORD = "&E)H@McQeThWmZq4t7w!z%C*F-JaNdRg"
         const val GRANT_ID = ""
         const val CLIENT_ID = ""
         const val PARTNER_CODE = "DUMMY_PARTNER"
