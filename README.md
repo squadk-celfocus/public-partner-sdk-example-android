@@ -29,16 +29,17 @@ VPartnerLib The initialization accepts the following parameters:
 
 • Locale (optional)
 
-• useDeeplink (optional)
+• VisualMode (optional)
 
 Integration:
 
-- VPartnerLib(partnerPassword = PARTNER_PASSWORD, clientId = CLIENT_ID, grantId = GRANT_ID, partnerCode = PARTNER_CODE, partnerLogo = PARTNER_LOGO, sponsorLogo = SPONSOR_LOGO, locale = LOCALE, useDeeplink = USE_DEEPLINK)
+- VPartnerLib(partnerPassword = PARTNER_PASSWORD, clientId = CLIENT_ID, grantId = GRANT_ID, partnerCode = PARTNER_CODE, partnerLogo = PARTNER_LOGO, sponsorLogo = SPONSOR_LOGO, locale = LOCALE)
 
 Initializing does not trigger the SDK, it only sets these values internally. At the exception of partnerLogo and sponsorLogo, all of these parameters are mandatory.
 If partnerLogo or sponsorLogo are empty, the splash screen won’t have the partners or the sponsor logos. To fill in either of them, define the desired parameter with the name of your image file without the extensions (png, jpeg, etc), which you need to put into “assets” folder in the project. If Locale is empty, the selected language will be the SIM card language, if you want another language, just pass it as string(ex: "it","es","de","za","gr,"pt","ie").
 
-The useDeeplink optional parameter defines if the app should use the predefined deeplink or just close the SDK. It should receive a Boolean value (true or false), which will be used to define if should navigate to deeplink (true) or not (false). (DEPRECATED)
+For the VisualMode parameter, you'll have access to the Enum declared on the SDK. It needs one of the two following values: 
+VisualMode.LightMode or VisualMode.DarkMode. If no value is passed, the SDK will use the what is defined by the user on the system settings.
 
 ### Add Device After initialize the VPartnerLib
 
@@ -51,8 +52,6 @@ If productId is filled goes straight to identifying your product screen after lo
 {
     status: "fail" | "pending" | "success"
 }
-
-Also, this status is stored on the app's shared preferences, so you have to reset it every time the callback is run. An example of how to use it is on MainActivity.kt of this project.
 
 ### Manage Subscriptions After initialize the VPartnerLib
 
@@ -67,67 +66,13 @@ To call this method use VPartnerLib.manageSubscriptions(context).
     	}
 	}
 
-## Using a library from the GitHub Packages
-
-Currently the GitHub Packages requires us to Authenticate to download an Android Library (Public or Private) hosted on the GitHub Packages. This might change for future releases
-
-Steps 1 and 2 can be skipped if already followed while publishing a library
-
-### Step 1 : Generate a Personal Access Token for GitHub
-
-Inside you GitHub account:
-Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
-Make sure you select the following scopes ("read:packages") and Generate a token
-After Generating make sure to copy your new personal access token. You won’t be able to see it again!
-
-### Step 2: Store your GitHub - Personal Access Token details
-
-Create a github.properties file within your root Android project
-
-In case of a public repository make sure you add this file to .gitignore for keep the token private
-
-Add properties gpr.usr=GITHUB_USERID and gpr.key=PERSONAL_ACCESS_TOKEN
-Replace GITHUB_USERID with personal / organisation Github User ID and PERSONAL_ACCESS_TOKEN with the token generated in #Step 1
-
-Alternatively you can also add the GPR_USER and GPR_API_KEY values to your environment variables on you local machine or build server to avoid creating a github properties file
-
-### Step 3 : Update build.gradle.kts inside the application module
-
-Add the following code to build.gradle.kts inside the application module that will be using the library published on GitHub Packages Repository
-
-    def githubProperties = new Properties()
-    githubProperties.load(
-        new FileInputStream(rootProject.file("github.properties"))
-    )
-
-//GitHub Authentication
-
-     repositories {
-         maven {
-             name = "GitHubPackages"
-             /*  Configure path to the library hosted on GitHub Packages Registry
-              *  Replace UserID with package owner userID and REPOSITORY with the repository name
-              *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibrary-GPR-KDSL"
-              */
-
-              url = uri("https://maven.pkg.github.com/squadk-celfocus/public-partner-sdk-example-android")
-
-             credentials {
-                 /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key =PERSONAL_ACCESS_TOKEN**/
-                 username = githubProperties["gpr.usr"] as String? ?: System.getenv("GPR_USER")
-                 password = githubProperties["gpr.key"] as String? ?: System.getenv("GPR_API_KEY")
-             }
-         }
-     }
-
-
-## Update build.gradle.kts inside the application module
+### Step 1: Update build.gradle.kts inside the application module
 
 inside dependencies of the build.gradle.kts of app module, use the following code
 
       dependencies {
             // consume vpartner library
-            implementation("com.vpartnerlib:sdk:$version") // *
+            implementation files('libs/vpartnerlib_sdk_prod-v2.0.0.aar')
             
             // consume other necessary dependencies
             
@@ -143,16 +88,14 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
             
             // IDTM
             
-            implementation files('libs/idtmlib-release_v2.0.27.aar')
+            implementation files('libs/idtmlib-release_v2.0.29.aar')
 	...}
 
-*check [our packages](https://github.com/orgs/squadk-celfocus/packages?repo_name=public-partner-sdk-example-android) for the latest version
-
-## Hilt
+## Step 2: Hilt
 
 We are now using Dagger-Hilt for DI, to get it up and running with your app, you have to annotate your app's entry point, like we are doing here: app/src/main/java/com/example/vduk_iot_v_app/MyApp.kt
 
-## Other Configs
+## Step 3: Other Configs
 
 In gradle make sure that build features include databinding and viewbinding with value true inside android group
 
@@ -174,7 +117,7 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: 'dagger.hilt.android.plugin'
 ```
 
-## Jumio, Huawei, Hilt and JitPack dependencies
+### Step 4: Jumio, Huawei, Hilt and JitPack dependencies
 
 Add Jumio SDK url to your maven under repositories in allprojects maven { url 'https://mobile-sdk.jumio.com' }
 
@@ -224,7 +167,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
             maven { url 'https://developer.huawei.com/repo/' }
             maven {
                 name = "GithubPackages"
-                url = uri("https://maven.pkg.github.com/squadk-celfocus/public-partner-sdk-example-android")
+                url = uri("https://maven.pkg.github.com/crvshlab/public-partner-sdk-example-android")
                 credentials {
                     username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                     password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
@@ -237,15 +180,15 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
     delete rootProject.buildDir
 	}
 
-## Gradle.properties 
+### Step 5: Gradle.properties 
 
 • Set jetifier to true android.enableJetifier = true
 
-## IDTM Library integration
+## Step 6: IDTM Library integration
 
 Add IdtmLib implementation to your gradle as a dependency:
 
-implementation files('libs/idtmlib-release_v2.0.27.aar')
+implementation files('libs/idtmlib-release-v2.0.29.aar')
 
 Follow this link https://developer.android.com/studio/projects/android-library#psd-add-aar-jar-dependency to add aar files to the main project.
 
@@ -255,7 +198,7 @@ Package whitelisting requirements:
 
 • Also for Idtm Library to work, google-services.json is needed on your project root. To generate this file, go to https://console.firebase.google.com/ , create a new project and select android to generate this file with the correct package of your android root app.
 
-## network_security_config.xml
+### network_security_config.xml
 
 On app/src/main/res/xml you'll find the network_security_config xml. This file is needed to trust our staging domain. Include it on your project, same path.
 
