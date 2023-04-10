@@ -1,25 +1,25 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.7.10"
-    ext.hilt_version = "2.42"
+    ext.kotlin_version = "1.8.0"
+    ext.hilt_version = "2.44.2"
 
     repositories {
         google()
         mavenCentral()
 
         maven { url "https://plugins.gradle.org/m2/" }
-        maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' }
+        maven { url 'https://nexus.analytics.vodafone.com/repository/maven-releases/' }
     }
 
     dependencies {
-        classpath "org.jmailen.gradle:kotlinter-gradle:3.2.0"
-        classpath "com.android.tools.build:gradle:7.2.1"
+        classpath "org.jmailen.gradle:kotlinter-gradle:3.13.0"
+        classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 
         //SecLib
-        classpath "com.vodafone.smapi.analytics:android-plugin:1.1.5"
-        classpath 'com.google.gms:google-services:4.3.10'
+        classpath "com.vodafone.smapi.analytics:android-plugin:2.0.0"
+        classpath 'com.google.gms:google-services:4.3.15'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -39,7 +39,7 @@ allprojects {
         jcenter()
 
         maven { url 'https://mobile-sdk.jumio.com' }
-        maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' }
+        maven { url 'https://nexus.analytics.vodafone.com/repository/maven-releases/' }
         maven { url 'https://jitpack.io' }
         maven {
             name = "GithubPackages"

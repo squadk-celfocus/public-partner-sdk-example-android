@@ -33,7 +33,7 @@ VPartnerLib The initialization accepts the following parameters:
 
 Integration:
 
-- VPartnerLib(partnerPassword = PARTNER_PASSWORD, clientId = CLIENT_ID, grantId = GRANT_ID, partnerCode = PARTNER_CODE, partnerLogo = PARTNER_LOGO, sponsorLogo = SPONSOR_LOGO, locale = LOCALE)
+- VPartnerLib(partnerPassword = PARTNER_PASSWORD, clientId = CLIENT_ID, grantId = GRANT_ID, partnerCode = PARTNER_CODE, partnerLogo = PARTNER_LOGO, sponsorLogo = SPONSOR_LOGO, locale = LOCALE, visualMode = VISUAL_MODE)
 
 Initializing does not trigger the SDK, it only sets these values internally. At the exception of partnerLogo and sponsorLogo, all of these parameters are mandatory.
 If partnerLogo or sponsorLogo are empty, the splash screen won’t have the partners or the sponsor logos. To fill in either of them, define the desired parameter with the name of your image file without the extensions (png, jpeg, etc), which you need to put into “assets” folder in the project. If Locale is empty, the selected language will be the SIM card language, if you want another language, just pass it as string(ex: "it","es","de","za","gr,"pt","ie").
@@ -43,7 +43,7 @@ VisualMode.LightMode or VisualMode.DarkMode. If no value is passed, the SDK will
 
 It's also required to set targetSdkVersion and minSdkVersion to 33 since we are using updated libs.
 
-We use kotlin version 1.7.10
+We use kotlin version 1.8.0
 
 ### Add Device After initialize the VPartnerLib
 
@@ -86,10 +86,10 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
             implementation 'com.google.guava:guava:30.1-jre'
             
             // IDTM
-            implementation files('libs/idtmlib-release_v2.0.29.aar')
+            implementation files('libs/idtmlib-release-v3.0.1.aar')
 
             // VpartnerLib
-            implementation 'com.vpartnerlib.sdk:prod:2.1.0'
+            implementation 'com.vpartnerlib.sdk:prod:2.2.0'
 	...}
 
 ## Step 2: Hilt
@@ -122,35 +122,35 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 Add Jumio SDK url to your maven under repositories in allprojects maven { url 'https://mobile-sdk.jumio.com' }
 
-Add SecLib (Smapi) url to your maven under repositories in allprojects maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' } classpath "com.vodafone.smapi.analytics:android-plugin:1.1.4"
+Add SecLib (Smapi) url to your maven under repositories in allprojects maven { url 'https://nexus.analytics.vodafone.com/repository/maven-releases/' } classpath "com.vodafone.smapi.analytics:android-plugin:1.1.4"
 
 	// Top-level build file where you can add configuration options common to all sub-projects/modules.
 	buildscript {
-    ext.kotlin_version = "1.7.10"
-    ext.hilt_version = "2.42"
+    ext.kotlin_version = "1.8.0"
+    ext.hilt_version = "2.43.2"
 
     repositories {
         google()
         mavenCentral()
 
-        maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' }
+        maven { url 'https://nexus.analytics.vodafone.com/repository/maven-releases/' }
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:7.2.0"
+        classpath "com.android.tools.build:gradle:7.4.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 
         //SecLib
-        classpath "com.vodafone.smapi.analytics:android-plugin:1.1.5"
-        classpath 'com.google.gms:google-services:4.3.10'
+        classpath "com.vodafone.smapi.analytics:android-plugin:2.0.0"
+        classpath 'com.google.gms:google-services:4.3.15'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 	}
 
-	def githubProperties = new Properties()
+	def githubProperties = new Properties() //needed  for download partner lib
 	githubProperties.load(
         new FileInputStream(rootProject.file("github.properties"))
 	)
@@ -163,7 +163,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
             jcenter() // Warning: this repository is going to shut down soon
 
             maven { url 'https://mobile-sdk.jumio.com' }
-            maven { url 'https://nexus.smapi.serial.io/repository/maven-releases/' }
+            maven { url 'https://nexus.analytics.vodafone.com/repository/maven-releases/' }
             maven { url 'https://jitpack.io' }
             maven {
                 name = "GithubPackages"
@@ -188,7 +188,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 
 Add IdtmLib implementation to your gradle as a dependency:
 
-implementation files('libs/idtmlib-release-v2.0.29.aar')
+implementation files('libs/idtmlib-release-v3.0.1.aar')
 
 Follow this link https://developer.android.com/studio/projects/android-library#psd-add-aar-jar-dependency to add aar files to the main project.
 
