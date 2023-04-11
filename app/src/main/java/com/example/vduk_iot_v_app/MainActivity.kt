@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         partnerLogo = PARTNER_LOGO,
         sponsorLogo = "",
         locale = "",
+        useDeeplink = false,
         visualMode = VisualMode.LightMode
     )
 
