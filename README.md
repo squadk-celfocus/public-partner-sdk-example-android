@@ -198,6 +198,13 @@ Package whitelisting requirements:
 
 • Also for Idtm Library to work, google-services.json is needed on your project root. To generate this file, go to https://console.firebase.google.com/ , create a new project and select android to generate this file with the correct package of your android root app.
 
+## Step 7: Add following meta data to your AndroidManifest.xml
+
+        <meta-data
+            android:name="com.vodafone.lib.seclibng.CUSTOM_TRACE_SOURCE"
+            android:value="com.vodafone.smartlife.vpartner"
+            tools:replace="android:value" />
+
 ### network_security_config.xml
 
 On app/src/main/res/xml you'll find the network_security_config xml. This file is needed to trust our staging domain. Include it on your project, same path.
