@@ -4,11 +4,22 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vduk_iot_v_app.databinding.ActivityMainBinding
 import com.vodafone.smartlife.vpartner.domain.usecases.VPartnerLib
+import com.vodafone.smartlife.vpartner.util.VisualMode
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    companion object {
+        const val PARTNER_PASSWORD = ""
+        const val GRANT_ID = ""
+        const val CLIENT_ID = ""
+        const val PARTNER_CODE = ""
+        const val PRODUCT_CODE = ""
+        const val PARTNER_LOGO = "ic_partner.png"
+        const val PRODUCT_ID = ""
+    }
 
     private val vPartnerLibIntegration = VPartnerLib(
         partnerPassword = PARTNER_PASSWORD,
@@ -18,18 +29,9 @@ class MainActivity : AppCompatActivity() {
         partnerLogo = PARTNER_LOGO,
         sponsorLogo = "",
         locale = "",
-        useDeeplink = false
+        useDeeplink = false,
+        visualMode = VisualMode.LightMode
     )
-
-    companion object {
-        const val PARTNER_PASSWORD = ""
-        const val GRANT_ID = ""
-        const val CLIENT_ID = ""
-        const val PARTNER_CODE = "DUMMY_PARTNER"
-        const val PRODUCT_CODE = "DUMMY_PARTNER_TRACKER1"
-        const val PARTNER_LOGO = "ic_partner.png"
-        const val PRODUCT_ID = ""
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
