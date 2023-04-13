@@ -93,7 +93,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
             implementation files('libs/idtmlib-release-v3.0.1.aar')
 
             // VpartnerLib
-            implementation 'com.vpartnerlib.sdk:prod:2.2.0'
+            implementation 'com.vpartnerlib.sdk:prod:3.0.0'
 	...}
 
 ## Step 2: Hilt
