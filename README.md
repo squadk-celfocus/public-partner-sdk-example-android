@@ -90,7 +90,7 @@ inside dependencies of the build.gradle.kts of app module, use the following cod
             implementation 'com.google.guava:guava:30.1-jre'
             
             // IDTM
-            implementation files('libs/idtmlib-release-v3.0.1.aar')
+            implementation files('libs/idtmlib-release-v3.0.3.aar')
 
             // VpartnerLib
             implementation 'com.vpartnerlib.sdk:prod:3.0.0'
@@ -126,7 +126,7 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 Add Jumio SDK url to your maven under repositories in allprojects maven { url 'https://mobile-sdk.jumio.com' }
 
-Add SecLib (Smapi) url to your maven under repositories in allprojects maven { url 'https://nexus.analytics.vodafone.com/repository/maven-releases/' } classpath "com.vodafone.smapi.analytics:android-plugin:1.1.4"
+Add SecLib (Smapi) url to your maven under repositories in allprojects maven { url 'https://nexus.analytics.vodafone.com/repository/maven-releases/' } classpath "com.vodafone.smapi.analytics:android-plugin:2.0.0"
 
 	// Top-level build file where you can add configuration options common to all sub-projects/modules.
 	buildscript {
@@ -192,7 +192,7 @@ Add SecLib (Smapi) url to your maven under repositories in allprojects maven { u
 
 Add IdtmLib implementation to your gradle as a dependency:
 
-implementation files('libs/idtmlib-release-v3.0.1.aar')
+implementation files('libs/idtmlib-release-v3.0.3.aar')
 
 Follow this link https://developer.android.com/studio/projects/android-library#psd-add-aar-jar-dependency to add aar files to the main project.
 
